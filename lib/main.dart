@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newborns_tome/screens/login_page.dart';
+import 'package:newborns_tome/utils/newborns_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,13 +11,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = NewbornsTome.dark();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: theme,
       home: Container(
         color: Colors.black45,
         child: const LoginPage(),
