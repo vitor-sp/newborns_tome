@@ -1,12 +1,14 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:newborns_tome/widgets/line_text_animation.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final List<String> text = ["IDEAL", "GREEK", "BEAUTY"];
     return Scaffold(
       body: Stack(
         children: [
@@ -16,7 +18,7 @@ class LoginPage extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          const BallMoving(),
+          const LineTextAnimation(),
           Center(
             child: ClipPath(
               clipper: InvertedRect(),
