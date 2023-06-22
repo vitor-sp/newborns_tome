@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = NewbornsTome.dark();
+    final theme = NewbornsTome.light();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
