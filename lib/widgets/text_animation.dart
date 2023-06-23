@@ -50,23 +50,26 @@ class _TextAnimationState extends State<TextAnimation>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ClipRect(
-                child: SlideTransition(
-                  position: Tween<Offset>(
-                    begin: const Offset(0.0, 1.0),
-                    end: Offset.zero,
-                  ).animate(_slideAnimation),
-                  child: Text(
-                    "THE",
-                    style: Theme.of(context).textTheme.displayLarge,
+              Align(
+                alignment: const Alignment(-0.5, 0),
+                child: ClipRect(
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0.0, 1.0),
+                      end: Offset.zero,
+                    ).animate(_slideAnimation),
+                    child: Text(
+                      "THE",
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
                   ),
                 ),
               ),
               Align(
-                alignment: Alignment.centerLeft,
+                alignment: Alignment.centerRight,
                 child: LineAnimation(
                   begin: 0,
-                  end: size.width * 0.70,
+                  end: size.width - size.width * 0.2,
                 ),
               ),
               ClipRect(
@@ -82,21 +85,24 @@ class _TextAnimationState extends State<TextAnimation>
                 ),
               ),
               Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.centerLeft,
                 child: LineAnimation(
                   begin: 0,
-                  end: size.width * 0.70,
+                  end: size.width - size.width * 0.2,
                 ),
               ),
-              ClipRect(
-                child: SlideTransition(
-                  position: Tween<Offset>(
-                    begin: const Offset(0.0, -1.0),
-                    end: Offset.zero,
-                  ).animate(_slideAnimation),
-                  child: Text(
-                    "TOME",
-                    style: Theme.of(context).textTheme.displayLarge,
+              Align(
+                alignment: const Alignment(0.45, 0),
+                child: ClipRect(
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0.0, -1.0),
+                      end: Offset.zero,
+                    ).animate(_slideAnimation),
+                    child: Text(
+                      "TOME",
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
                   ),
                 ),
               ),

@@ -102,15 +102,15 @@ class NewbornsTome {
 
   static ThemeData light() {
     return ThemeData(
-      brightness: Brightness.light,
-      checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateColor.resolveWith((states) {
-          return Colors.black;
-        }),
-      ),
-      textTheme: lightTextTheme,
-      scaffoldBackgroundColor: Colors.white,
-    );
+        brightness: Brightness.light,
+        checkboxTheme: CheckboxThemeData(
+          fillColor: MaterialStateColor.resolveWith((states) {
+            return Colors.black;
+          }),
+        ),
+        textTheme: lightTextTheme,
+        scaffoldBackgroundColor: Colors.white,
+        primaryColor: Colors.black);
   }
 
   static ThemeData dark() {
@@ -118,6 +118,7 @@ class NewbornsTome {
       brightness: Brightness.dark,
       textTheme: darkTextTheme,
       scaffoldBackgroundColor: Colors.black,
+      primaryColor: Colors.white,
     );
   }
 }

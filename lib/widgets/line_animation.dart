@@ -46,7 +46,7 @@ class _LineAnimationState extends State<LineAnimation>
       duration: _controller.duration!,
       width: _animation.value,
       height: 2,
-      color: Colors.black,
+      color: Theme.of(context).primaryColor,
     );
   }
 }

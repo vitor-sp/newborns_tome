@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:newborns_tome/widgets/intro_image_animation.dart';
 import 'package:newborns_tome/widgets/text_animation.dart';
 
 class LoginPage extends StatelessWidget {
@@ -13,8 +14,8 @@ class LoginPage extends StatelessWidget {
       body: LayoutBuilder(
         builder: (context, constraints) {
           final size = constraints.biggest;
-          final leftPadding = size.width * 0.1;
-          final topPadding = size.height * 0.1;
+          final leftPadding = size.width * 0.025;
+          final topPadding = size.height * 0.075;
           return Stack(
             children: [
               Positioned.fill(
@@ -22,6 +23,9 @@ class LoginPage extends StatelessWidget {
                   "assets/background.png",
                   fit: BoxFit.cover,
                 ),
+              ),
+              const IntroImageAnimation(
+                image: "assets/virgem_maria.png",
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(
@@ -37,11 +41,11 @@ class LoginPage extends StatelessWidget {
                   clipper: InvertedRect(),
                   child: BackdropFilter(
                     filter: ImageFilter.blur(
-                      sigmaX: 5.0,
-                      sigmaY: 5.0,
+                      sigmaX: 7.0,
+                      sigmaY: 7.0,
                     ),
                     child: Container(
-                      color: Colors.black.withOpacity(0.5),
+                      color: Colors.black.withOpacity(0.7),
                     ),
                   ),
                 ),
@@ -62,8 +66,8 @@ class InvertedRect extends CustomClipper<Path> {
       ..addRect(Rect.fromLTWH(0.0, 0.0, size.width, size.height))
       ..addRect(Rect.fromCenter(
           center: Offset(size.width / 2, size.height / 2),
-          width: size.width * 0.8,
-          height: size.height * 0.8))
+          width: size.width * 0.95,
+          height: size.height * 0.85))
       ..fillType = PathFillType.evenOdd;
   }
 
