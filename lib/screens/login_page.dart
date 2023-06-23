@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:newborns_tome/widgets/background_animation.dart';
+import 'package:newborns_tome/widgets/intro_image_animation.dart';
 import 'package:newborns_tome/widgets/text_animation.dart';
 
 class LoginPage extends StatelessWidget {
@@ -19,11 +20,11 @@ class LoginPage extends StatelessWidget {
           return Stack(
             children: [
               const BackgroundAnimation(
-                image: "assets/01.jpg",
+                image: "assets/marble_green.jpg",
               ),
-              // const IntroImageAnimation(
-              //   image: "assets/virgem_maria.png",
-              // ),
+              const IntroImageAnimation(
+                image: "assets/maria_jesus.png",
+              ),
               Padding(
                 padding: EdgeInsets.fromLTRB(
                   leftPadding,

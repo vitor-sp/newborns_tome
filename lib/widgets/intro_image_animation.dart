@@ -24,8 +24,8 @@ class _IntroImageAnimationState extends State<IntroImageAnimation>
       vsync: this,
     );
     _widthAnimation = Tween<double>(
-      begin: 500,
-      end: 1400,
+      begin: 400,
+      end: 1000,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.slowMiddle));
 
     _alignmentAnimation = Tween<Alignment>(
@@ -52,7 +52,7 @@ class _IntroImageAnimationState extends State<IntroImageAnimation>
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: const Alignment(0, 0),
+      alignment: _alignmentAnimation.value,
       child: SizedBox(
         // decoration: BoxDecoration(
         //   border: Border.all(
@@ -62,6 +62,8 @@ class _IntroImageAnimationState extends State<IntroImageAnimation>
         width: _widthAnimation.value,
         child: Image.asset(
           widget.image,
+          fit: BoxFit.cover,
+          isAntiAlias: true,
         ),
       ),
     );

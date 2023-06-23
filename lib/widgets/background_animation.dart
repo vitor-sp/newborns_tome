@@ -56,7 +56,6 @@ class _BackgroundAnimationState extends State<BackgroundAnimation>
                 scale: 1.2,
                 child: Image.asset(
                   widget.image,
-                  scale: 10,
                   fit: BoxFit.cover,
                 ),
               ),
