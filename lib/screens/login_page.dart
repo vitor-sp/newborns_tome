@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:newborns_tome/widgets/line_text_animation.dart';
+import 'package:newborns_tome/widgets/text_animation.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -10,30 +10,45 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<String> text = ["IDEAL", "GREEK", "BEAUTY"];
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.asset(
-              "assets/background.png",
-              fit: BoxFit.cover,
-            ),
-          ),
-          const LineTextAnimation(),
-          Center(
-            child: ClipPath(
-              clipper: InvertedRect(),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(
-                  sigmaX: 5.0,
-                  sigmaY: 5.0,
-                ),
-                child: Container(
-                  color: Colors.black.withOpacity(0.5),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final size = constraints.biggest;
+          final leftPadding = size.width * 0.1;
+          final topPadding = size.height * 0.1;
+          return Stack(
+            children: [
+              Positioned.fill(
+                child: Image.asset(
+                  "assets/background.png",
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
-          ),
-        ],
+              Padding(
+                padding: EdgeInsets.fromLTRB(
+                  leftPadding,
+                  topPadding,
+                  leftPadding,
+                  topPadding,
+                ),
+                child: const TextAnimation(),
+              ),
+              Center(
+                child: ClipPath(
+                  clipper: InvertedRect(),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(
+                      sigmaX: 5.0,
+                      sigmaY: 5.0,
+                    ),
+                    child: Container(
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
