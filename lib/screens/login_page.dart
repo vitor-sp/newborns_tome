@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:newborns_tome/widgets/background_animation.dart';
 import 'package:newborns_tome/widgets/intro_image_animation.dart';
 import 'package:newborns_tome/widgets/text_animation.dart';
 
@@ -18,11 +19,8 @@ class LoginPage extends StatelessWidget {
           final topPadding = size.height * 0.075;
           return Stack(
             children: [
-              Positioned.fill(
-                child: Image.asset(
-                  "assets/background.png",
-                  fit: BoxFit.cover,
-                ),
+              const BackgroundAnimation(
+                image: "assets/background.png",
               ),
               const IntroImageAnimation(
                 image: "assets/virgem_maria.png",
@@ -41,8 +39,8 @@ class LoginPage extends StatelessWidget {
                   clipper: InvertedRect(),
                   child: BackdropFilter(
                     filter: ImageFilter.blur(
-                      sigmaX: 7.0,
-                      sigmaY: 7.0,
+                      sigmaX: 15.0,
+                      sigmaY: 15.0,
                     ),
                     child: Container(
                       color: Colors.black.withOpacity(0.7),
