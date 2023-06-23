@@ -25,7 +25,7 @@ class _IntroImageAnimationState extends State<IntroImageAnimation>
     );
     _widthAnimation = Tween<double>(
       begin: 500,
-      end: 1100,
+      end: 1400,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.slowMiddle));
 
     _alignmentAnimation = Tween<Alignment>(
@@ -61,7 +61,6 @@ class _IntroImageAnimationState extends State<IntroImageAnimation>
         // ),
         width: _widthAnimation.value,
         child: Image.asset(
-          alignment: Alignment.bottomCenter,
           widget.image,
         ),
       ),
