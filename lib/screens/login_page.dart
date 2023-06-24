@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:newborns_tome/utils/animation_manager.dart';
 import 'package:newborns_tome/widgets/animation_login_page.dart';
 
 class LoginPage extends StatefulWidget {
-  final AnimationManager animationManager = AnimationManager();
-
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();

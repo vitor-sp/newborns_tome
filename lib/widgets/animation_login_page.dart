@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:newborns_tome/utils/animation_manager.dart';
 import 'package:newborns_tome/widgets/animation_background_.dart';
 import 'package:newborns_tome/widgets/animation_intro_image_.dart';
 import 'package:newborns_tome/widgets/animation_text.dart';
@@ -12,10 +11,6 @@ class AnimationLoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final animationManager =
-        Provider.of<AnimationManager>(context, listen: false);
-
-    animationManager.startLoginAnimaitons();
 
     return Scaffold(
       body: LayoutBuilder(

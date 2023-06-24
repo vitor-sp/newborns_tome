@@ -1,16 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:newborns_tome/utils/animation_manager.dart';
 import 'package:newborns_tome/widgets/animation_line.dart';
 import 'package:provider/provider.dart';
 
-class AnimationText extends StatelessWidget {
+class AnimationText extends StatefulWidget {
   const AnimationText({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final animationManager =
-        Provider.of<AnimationManager>(context, listen: false);
+  State<AnimationText> createState() => _AnimationTextState();
+}
 
+class _AnimationTextState extends State<AnimationText>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Offset> _animationBottom;
+  late Animation<Offset> _animationTop;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(
+        seconds: 1,
+      ),
+      vsync: this,
+    );
+
+    _animationBottom = Tween<Offset>(
+      begin: const Offset(0.0, 1.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _animationTop = Tween<Offset>(
+      begin: const Offset(0.0, -1.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final size = constraints.biggest;
@@ -22,8 +68,7 @@ class AnimationText extends StatelessWidget {
                 alignment: const Alignment(-0.5, 0),
                 child: ClipRect(
                   child: SlideTransition(
-                    position: animationManager.animations['login_text_bottom']!
-                        as Animation<Offset>,
+                    position: _animationBottom,
                     child: Text(
                       "THE",
                       style: Theme.of(context).textTheme.displayLarge,
@@ -39,8 +84,7 @@ class AnimationText extends StatelessWidget {
               ),
               ClipRect(
                 child: SlideTransition(
-                  position: animationManager.animations['login_text_top']!
-                      as Animation<Offset>,
+                  position: _animationTop,
                   child: Text(
                     "NEWBORN`S",
                     style: Theme.of(context).textTheme.displayLarge,
@@ -57,8 +101,7 @@ class AnimationText extends StatelessWidget {
                 alignment: const Alignment(0.45, 0),
                 child: ClipRect(
                   child: SlideTransition(
-                    position: animationManager.animations['login_text_top']!
-                        as Animation<Offset>,
+                    position: _animationTop,
                     child: Text(
                       "TOME",
                       style: Theme.of(context).textTheme.displayLarge,

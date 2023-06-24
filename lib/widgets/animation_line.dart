@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:newborns_tome/utils/animation_manager.dart';
-import 'package:provider/provider.dart';
 
-class AnimationLine extends StatelessWidget {
+class AnimationLine extends StatefulWidget {
   AnimationLine({
     super.key,
     required this.widthLine,
@@ -11,15 +9,51 @@ class AnimationLine extends StatelessWidget {
   double widthLine = 0;
 
   @override
-  Widget build(BuildContext context) {
-    final animationManager =
-        Provider.of<AnimationManager>(context, listen: false);
+  State<AnimationLine> createState() => _AnimationLineState();
+}
 
+class _AnimationLineState extends State<AnimationLine>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(
+        seconds: 1,
+      ),
+      vsync: this,
+    );
+
+    _animation = Tween<double>(
+      begin: 0,
+      end: widget.widthLine,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: animationManager.loginAnimationsControllers['login_line']!,
+      animation: _controller,
       builder: (context, child) {
         return Container(
-          width: animationManager.animations['login_line']!.value + widthLine,
+          width: _animation.value,
           height: 2,
           color: Theme.of(context).primaryColor,
         );

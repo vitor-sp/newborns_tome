@@ -1,16 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:newborns_tome/utils/animation_manager.dart';
-import 'package:provider/provider.dart';
 
-class AnimationBackground extends StatelessWidget {
+class AnimationBackground extends StatefulWidget {
   const AnimationBackground({super.key, required this.image});
   final String image;
 
   @override
-  Widget build(BuildContext context) {
-    final animationManager =
-        Provider.of<AnimationManager>(context, listen: false);
+  State<AnimationBackground> createState() => _AnimationBackgroundState();
+}
 
+class _AnimationBackgroundState extends State<AnimationBackground>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Offset> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(
+        seconds: 10,
+      ),
+      vsync: this,
+    );
+
+    _animation = Tween<Offset>(
+      begin: const Offset(0.1, 0),
+      end: const Offset(0, 0.1),
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _controller.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         double availableWidth = constraints.maxWidth;
@@ -21,12 +55,11 @@ class AnimationBackground extends StatelessWidget {
             width: availableWidth,
             height: availableHeight,
             child: SlideTransition(
-              position: animationManager.animations['login_background']!
-                  as Animation<Offset>,
+              position: _animation,
               child: Transform.scale(
                 scale: 1.2,
                 child: Image.asset(
-                  image,
+                  widget.image,
                   fit: BoxFit.cover,
                 ),
               ),
