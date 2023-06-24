@@ -3,15 +3,111 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:newborns_tome/widgets/animation_background_.dart';
 import 'package:newborns_tome/widgets/animation_intro_image_.dart';
+import 'package:newborns_tome/widgets/animation_line.dart';
 import 'package:newborns_tome/widgets/animation_text.dart';
-import 'package:provider/provider.dart';
 
-class AnimationLoginPage extends StatelessWidget {
+class AnimationLoginPage extends StatefulWidget {
   const AnimationLoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<AnimationLoginPage> createState() => _AnimationLoginPageState();
+}
 
+class _AnimationLoginPageState extends State<AnimationLoginPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  late Animation<Offset> _animationBackgrond;
+
+  late Animation<Alignment> _animationImage;
+  late Animation<Offset> _animationTextBottom;
+  late Animation<Offset> _animationTextTop;
+  late Animation<double> _animationLine;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 2500),
+      vsync: this,
+    );
+
+    _animationBackgrond = Tween<Offset>(
+      begin: const Offset(0.1, 0),
+      end: const Offset(0, 0.1),
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(
+          0,
+          1,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+
+    _animationImage = Tween<Alignment>(
+      begin: const Alignment(0.5, 0),
+      end: Alignment.centerRight,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(
+          0.0,
+          0.8,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+
+    _animationTextBottom = Tween<Offset>(
+      begin: const Offset(0.0, 1.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(
+          0.0,
+          1,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+
+    _animationTextTop = Tween<Offset>(
+      begin: const Offset(0.0, -1.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(
+          0.0,
+          1,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+
+    _animationLine = Tween<double>(
+      begin: 0,
+      end: 1000,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(
+          0.0,
+          0.8,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+
+    _controller.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
@@ -23,8 +119,10 @@ class AnimationLoginPage extends StatelessWidget {
               const AnimationBackground(
                 image: "assets/clouds.jpg",
               ),
-              const AnimationIntroImage(
+              AnimationIntroImage(
                 image: "assets/maria_jesus.png",
+                controller: _controller,
+                animation: _animationImage,
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(
@@ -33,7 +131,42 @@ class AnimationLoginPage extends StatelessWidget {
                   leftPadding,
                   topPadding,
                 ),
-                child: const AnimationText(),
+                child: Column(
+                  children: [
+                    Container(
+                      color: Colors.red,
+                      child: AnimationText(
+                        controller: _controller,
+                        animation: _animationTextBottom,
+                        txt: "THE",
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: AnimationLine(
+                        animation: _animationLine,
+                        controller: _controller,
+                      ),
+                    ),
+                    AnimationText(
+                      controller: _controller,
+                      animation: _animationTextBottom,
+                      txt: "NEWSBORN`S",
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: AnimationLine(
+                        animation: _animationLine,
+                        controller: _controller,
+                      ),
+                    ),
+                    AnimationText(
+                      controller: _controller,
+                      animation: _animationTextBottom,
+                      txt: "TOME",
+                    ),
+                  ],
+                ),
               ),
               Center(
                 child: ClipPath(
@@ -72,62 +205,3 @@ class InvertedRect extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }
-
-// class BallMoving extends StatefulWidget {
-//   const BallMoving({Key? key}) : super(key: key);
-
-//   @override
-//   State<BallMoving> createState() => _BallMovingState();
-// }
-
-// class _BallMovingState extends State<BallMoving>
-//     with SingleTickerProviderStateMixin {
-//   late AnimationController _animationController;
-//   late Animation<double> _animation;
-//   double controllerY = 0;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _animationController = AnimationController(
-//       duration: const Duration(seconds: 2),
-//       vsync: this,
-//     );
-//     _animation = Tween(begin: -1.0, end: 1.0).animate(_animationController)
-//       ..addListener(() {
-//         setState(() {});
-//       });
-//     _animationController.repeat(reverse: true);
-//   }
-
-//   @override
-//   void dispose() {
-//     _animationController.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return AnimatedBuilder(
-//       animation: _animation,
-//       builder: (context, child) {
-//         return Align(
-//           alignment: Alignment(_animation.value, controllerY),
-//           child: GestureDetector(
-//             onTap: () {
-//               // Handle onTap if needed
-//             },
-//             child: Container(
-//               height: 200,
-//               width: 200,
-//               decoration: const BoxDecoration(
-//                 color: Colors.red,
-//                 shape: BoxShape.circle,
-//               ),
-//             ),
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }

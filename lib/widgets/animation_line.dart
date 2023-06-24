@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 class AnimationLine extends StatefulWidget {
   AnimationLine({
     super.key,
-    required this.widthLine,
+    required this.animation,
+    required this.controller,
   });
+
+  final Animation<double> animation;
+  final AnimationController controller;
 
   double widthLine = 0;
 
@@ -14,46 +18,13 @@ class AnimationLine extends StatefulWidget {
 
 class _AnimationLineState extends State<AnimationLine>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      duration: const Duration(
-        seconds: 1,
-      ),
-      vsync: this,
-    );
-
-    _animation = Tween<double>(
-      begin: 0,
-      end: widget.widthLine,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOut,
-      ),
-    );
-
-    _controller.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: _controller,
+      animation: widget.controller,
       builder: (context, child) {
         return Container(
-          width: _animation.value,
+          width: widget.animation.value,
           height: 2,
           color: Theme.of(context).primaryColor,
         );

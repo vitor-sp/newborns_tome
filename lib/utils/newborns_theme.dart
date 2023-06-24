@@ -55,6 +55,8 @@ class NewbornsTome {
     displayLarge: GoogleFonts.italiana(
       color: Colors.black,
       fontWeight: FontWeight.w500,
+      textBaseline: TextBaseline.alphabetic,
+      height: 0.75,
     ),
     displayMedium: GoogleFonts.italiana(
       color: Colors.black,

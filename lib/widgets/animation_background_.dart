@@ -30,7 +30,11 @@ class _AnimationBackgroundState extends State<AnimationBackground>
     ).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Curves.easeInOut,
+        curve: const Interval(
+          0,
+          1,
+          curve: Curves.easeInOut,
+        ),
       ),
     );
 
