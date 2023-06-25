@@ -1,22 +1,149 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:newborns_tome/widgets/animated_background.dart';
+import 'package:newborns_tome/widgets/animated_line.dart';
+import 'package:newborns_tome/widgets/animated_login_password.dart';
+import 'package:newborns_tome/widgets/animated_text.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Alignment> _animationImage;
+  late Animation<Offset> _animationTextBottom;
+  late Animation<Offset> _animationTextTop;
+
+  bool _animationComplete = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 2000),
+      vsync: this,
+    );
+
+    _animationImage = Tween<Alignment>(
+      begin: const Alignment(0.5, 0),
+      end: Alignment.centerRight,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(
+          0.0,
+          0.8,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+
+    _animationTextBottom = Tween<Offset>(
+      begin: const Offset(0.0, 1.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(
+          0.5,
+          0.8,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+
+    _animationTextTop = Tween<Offset>(
+      begin: const Offset(0.0, -1.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(
+          0.5,
+          0.8,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+
+    _controller.forward().whenComplete(() {
+      Future.delayed(const Duration(seconds: 2), () {
+        setState(() {
+          _controller.reverse().whenComplete(() {
+            setState(() {
+              _animationComplete = true;
+            });
+          });
+        });
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Image.asset(
-              "assets/background.png",
-              fit: BoxFit.cover,
+          const AnimatedBackground(
+            image: "assets/clouds.jpg",
+          ),
+          // AnimationIntroImage(
+          //   image: "assets/maria_jesus.png",
+          //   controller: _controller,
+          //   animation: _animationImage,
+          // ),
+          Padding(
+            padding: const EdgeInsets.all(40),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Align(
+                  child: AnimatedText(
+                    controller: _controller,
+                    animation: _animationTextBottom,
+                    txt: "THE",
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: AnimatedLine(
+                    controller: _controller,
+                    middleScreenSize: MediaQuery.of(context).size.width / 2,
+                  ),
+                ),
+                AnimatedText(
+                  controller: _controller,
+                  animation: _animationTextTop,
+                  txt: "NEWSBORN`S",
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: AnimatedLine(
+                    controller: _controller,
+                    middleScreenSize: MediaQuery.of(context).size.width / 2,
+                  ),
+                ),
+                AnimatedText(
+                  controller: _controller,
+                  animation: _animationTextTop,
+                  txt: "TOME",
+                ),
+              ],
             ),
           ),
-          const BallMoving(),
           Center(
             child: ClipPath(
               clipper: InvertedRect(),
@@ -26,11 +153,12 @@ class LoginPage extends StatelessWidget {
                   sigmaY: 5.0,
                 ),
                 child: Container(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.black.withOpacity(0.7),
                 ),
               ),
             ),
           ),
+          if (_animationComplete) const AnimatedLoginPassword(),
         ],
       ),
     );
@@ -40,75 +168,15 @@ class LoginPage extends StatelessWidget {
 class InvertedRect extends CustomClipper<Path> {
   @override
   getClip(Size size) {
-    print(size);
     return Path()
       ..addRect(Rect.fromLTWH(0.0, 0.0, size.width, size.height))
       ..addRect(Rect.fromCenter(
           center: Offset(size.width / 2, size.height / 2),
-          width: size.width * 0.8,
-          height: size.height * 0.8))
+          width: size.width * 0.95,
+          height: size.height * 0.85))
       ..fillType = PathFillType.evenOdd;
   }
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => true;
-}
-
-class BallMoving extends StatefulWidget {
-  const BallMoving({Key? key}) : super(key: key);
-
-  @override
-  State<BallMoving> createState() => _BallMovingState();
-}
-
-class _BallMovingState extends State<BallMoving>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _animation;
-  double controllerY = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    );
-    _animation = Tween(begin: -1.0, end: 1.0).animate(_animationController)
-      ..addListener(() {
-        setState(() {});
-      });
-    _animationController.repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animation,
-      builder: (context, child) {
-        return Align(
-          alignment: Alignment(_animation.value, controllerY),
-          child: GestureDetector(
-            onTap: () {
-              // Handle onTap if needed
-            },
-            child: Container(
-              height: 200,
-              width: 200,
-              decoration: const BoxDecoration(
-                color: Colors.red,
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
 }
