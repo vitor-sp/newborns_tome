@@ -24,17 +24,12 @@ class _AnimatedTextState extends State<AnimatedText>
     super.initState();
 
     _controller = widget.controller;
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.dismissed) {
-        dispose();
-      }
-    });
   }
 
   @override
   void dispose() {
-    _controller.removeStatusListener((status) {});
-    print("animatedtext disposed");
+    _controller.dispose();
+
     super.dispose();
   }
 
