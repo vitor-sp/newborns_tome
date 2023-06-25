@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage>
   late Animation<Offset> _animationTextBottom;
   late Animation<Offset> _animationTextTop;
 
-  bool _animationComplete = false;
+  final _isAnimationComplete = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -73,15 +73,12 @@ class _LoginPageState extends State<LoginPage>
       ),
     );
 
-    _controller.forward().whenComplete(() {
-      Future.delayed(const Duration(seconds: 2), () {
-        setState(() {
-          _controller.reverse().whenComplete(() {
-            setState(() {
-              _animationComplete = true;
-            });
-          });
-        });
+    //TODO: CRAZYYY
+    _controller.forward().whenComplete(() async {
+      await Future.delayed(const Duration(seconds: 2));
+
+      _controller.reverse().whenComplete(() {
+        _isAnimationComplete.value = true;
       });
     });
   }
@@ -94,6 +91,7 @@ class _LoginPageState extends State<LoginPage>
 
   @override
   Widget build(BuildContext context) {
+    print("build");
     return Scaffold(
       body: Stack(
         children: [
@@ -158,7 +156,16 @@ class _LoginPageState extends State<LoginPage>
               ),
             ),
           ),
-          if (_animationComplete) const AnimatedLoginPassword(),
+          AnimatedBuilder(
+            animation: _isAnimationComplete,
+            builder: (context, child) {
+              if (_isAnimationComplete.value) {
+                return child!;
+              }
+              return const SizedBox.shrink();
+            },
+            child: const AnimatedLoginPassword(),
+          ),
         ],
       ),
     );

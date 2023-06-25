@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AnimatedLine extends StatefulWidget {
-  AnimatedLine({
+  const AnimatedLine({
     super.key,
     required this.controller,
     required this.middleScreenSize,
@@ -9,8 +9,6 @@ class AnimatedLine extends StatefulWidget {
 
   final AnimationController controller;
   final double middleScreenSize;
-
-  double widthLine = 0;
 
   @override
   State<AnimatedLine> createState() => _AnimatedLineState();
