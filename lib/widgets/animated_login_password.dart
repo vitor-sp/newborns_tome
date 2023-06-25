@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:newborns_tome/widgets/hover_text.dart';
 
 import 'custom_text_field.dart';
+import 'hover_text.dart';
 
 class AnimatedLoginPassword extends StatefulWidget {
   const AnimatedLoginPassword({super.key});
@@ -12,8 +12,8 @@ class AnimatedLoginPassword extends StatefulWidget {
 
 class _AnimatedLoginPasswordState extends State<AnimatedLoginPassword>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _opacityAnimation;
+  late final AnimationController _controller;
+  late final Animation<double> _opacityAnimation;
 
   @override
   void initState() {
@@ -22,10 +22,11 @@ class _AnimatedLoginPasswordState extends State<AnimatedLoginPassword>
     const double begin = 0;
     const double end = 1;
     _controller = AnimationController(
-        duration: const Duration(
-          seconds: duration,
-        ),
-        vsync: this);
+      duration: const Duration(
+        seconds: duration,
+      ),
+      vsync: this,
+    );
 
     _opacityAnimation = Tween<double>(
       begin: begin,
@@ -61,15 +62,11 @@ class _AnimatedLoginPasswordState extends State<AnimatedLoginPassword>
                 const CustomTextField(
                   label: "Username",
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 const CustomTextField(
                   label: "Password",
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 SizedBox(
                   height: 35,
                   width: 120,
@@ -81,16 +78,9 @@ class _AnimatedLoginPasswordState extends State<AnimatedLoginPassword>
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                AnimatedContainer(
-                  duration: const Duration(
-                    milliseconds: 300,
-                  ),
-                  child: const HoverText(
-                    text: "New? Register now!",
-                  ),
+                const SizedBox(height: 10),
+                const HoverText(
+                  text: "New? Register now!",
                 ),
               ],
             ),

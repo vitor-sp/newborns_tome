@@ -23,7 +23,6 @@ class CustomTextField extends StatelessWidget {
           labelText: label,
         ),
         // Add TextEditingController to manage the entered value
-        controller: TextEditingController(),
         // Add form validation
         // validator: (value) {
         //   // Perform validation and return error message if invalid

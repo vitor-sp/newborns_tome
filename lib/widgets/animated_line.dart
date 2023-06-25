@@ -42,13 +42,6 @@ class _AnimatedLineState extends State<AnimatedLine>
   }
 
   @override
-  void dispose() {
-    widget.controller.removeStatusListener((status) {});
-    print("animatedLine disposed");
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: widget.controller,

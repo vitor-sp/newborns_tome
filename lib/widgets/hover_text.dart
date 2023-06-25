@@ -7,7 +7,7 @@ class HoverText extends StatefulWidget {
   const HoverText({Key? key, required this.text}) : super(key: key);
 
   @override
-  _HoverTextState createState() => _HoverTextState();
+  State<HoverText> createState() => _HoverTextState();
 }
 
 class _HoverTextState extends State<HoverText> {

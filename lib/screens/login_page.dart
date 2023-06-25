@@ -16,7 +16,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<Alignment> _animationImage;
   late Animation<Offset> _animationTextBottom;
   late Animation<Offset> _animationTextTop;
 
@@ -29,20 +28,6 @@ class _LoginPageState extends State<LoginPage>
     _controller = AnimationController(
       duration: const Duration(milliseconds: 2000),
       vsync: this,
-    );
-
-    _animationImage = Tween<Alignment>(
-      begin: const Alignment(0.5, 0),
-      end: Alignment.centerRight,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(
-          0.0,
-          0.8,
-          curve: Curves.easeInOut,
-        ),
-      ),
     );
 
     _animationTextBottom = Tween<Offset>(
@@ -73,7 +58,6 @@ class _LoginPageState extends State<LoginPage>
       ),
     );
 
-    //TODO: CRAZYYY
     _controller.forward().whenComplete(() async {
       await Future.delayed(const Duration(seconds: 2));
 
@@ -91,7 +75,6 @@ class _LoginPageState extends State<LoginPage>
 
   @override
   Widget build(BuildContext context) {
-    print("build");
     return Scaffold(
       body: Stack(
         children: [
