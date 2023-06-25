@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class AnimationBackground extends StatefulWidget {
-  const AnimationBackground({super.key, required this.image});
+class AnimatedBackground extends StatefulWidget {
+  const AnimatedBackground({super.key, required this.image});
   final String image;
 
   @override
-  State<AnimationBackground> createState() => _AnimationBackgroundState();
+  State<AnimatedBackground> createState() => _AnimatedBackgroundState();
 }
 
-class _AnimationBackgroundState extends State<AnimationBackground>
+class _AnimatedBackgroundState extends State<AnimatedBackground>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _animation;

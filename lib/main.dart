@@ -15,9 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       showPerformanceOverlay: false,
+      showSemanticsDebugger: false,
       title: 'Flutter Demo',
       theme: theme,
-      home: LoginPage(),
+      home: const LoginPage(),
     );
   }
 }

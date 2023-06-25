@@ -6,6 +6,7 @@ class NewbornsTome {
     displayLarge: GoogleFonts.italiana(
       color: Colors.white,
       fontWeight: FontWeight.w500,
+      height: 0.75,
     ),
     displayMedium: GoogleFonts.italiana(
       color: Colors.white,

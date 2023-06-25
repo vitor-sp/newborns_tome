@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AnimationText extends StatefulWidget {
-  const AnimationText(
+class AnimatedText extends StatefulWidget {
+  const AnimatedText(
       {super.key,
       required this.animation,
       required this.controller,
@@ -12,11 +12,32 @@ class AnimationText extends StatefulWidget {
   final String txt;
 
   @override
-  State<AnimationText> createState() => _AnimationTextState();
+  State<AnimatedText> createState() => _AnimatedTextState();
 }
 
-class _AnimationTextState extends State<AnimationText>
+class _AnimatedTextState extends State<AnimatedText>
     with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = widget.controller;
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.dismissed) {
+        dispose();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.removeStatusListener((status) {});
+    print("animatedtext disposed");
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -29,7 +50,6 @@ class _AnimationTextState extends State<AnimationText>
               position: widget.animation,
               child: Center(
                 child: RichText(
-                  textAlign: TextAlign.center,
                   textHeightBehavior: const TextHeightBehavior(
                     applyHeightToFirstAscent: true,
                     applyHeightToLastDescent: true,
